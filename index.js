@@ -64,7 +64,7 @@ client.connect(err => {
     } )
   })
 
-  app.get('/productjegulaod',(req, res)=>{
+  app.get('/productemail',(req, res)=>{
     console.log('ke hmm',req.query.email);
     orderdCollection.find({email: req.query.email})
     .toArray((err, documents)=>{
@@ -73,10 +73,16 @@ client.connect(err => {
   })
 
   app.delete('/deleteProduct/:id',(req,res)=>{
-    const id=ObjectId(req.params.id);
+    const id=ObjectID(req.params.id);
     console.log('delete this');
-    productCollection.findOneAndDelete({_id: id})
-    .then((err,documents)=>res.send(documents.value))
+    productCollection.deleteOne({_id: id})
+    .then((err,documents)=>res.send(documents))
+  })
+  app.delete('/deleteOrderdProduct/:id',(req,res)=>{
+    const id=ObjectID(req.params.id);
+    console.log('delete this');
+    orderdCollection.deleteOne({_id: id})
+    .then((err,documents)=>res.send(documents))
   })
 });
 
